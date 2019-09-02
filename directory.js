@@ -16,7 +16,12 @@ app.directive('autoComplete', function clientAutoCompleteDir() {
                 select: function (event, ui) {
                     event.preventDefault();
                     scope.$apply(function(){
-                        scope[iAttrs.uiParent] = ui.item;
+                        if(iAttrs.uiCallback){ // ui-callback attributes for callback function
+                            var val = 'scope.' + iAttrs.uiCallback +'(ui.item)';
+                        } else {
+                            var val = 'scope.' + iAttrs.uiParent +'= ui.item';
+                        }
+                        eval(val)
                     });                       
                 },
             });
